@@ -10,6 +10,7 @@ class point_within_triangle:
     # Initiaization function
     def __init__(self):
         self.triangle = []
+        self.intersecting_edge = 0
         print('Python program to test if a Point is within a triangle')
 
     # Get the Point data as input data from the user
@@ -44,6 +45,7 @@ class point_within_triangle:
                 negative = negative + 1
             else:
                 zeros = zeros + 1
+                self.intersecting_edge = i
 
         if(positive == 3 or negative == 3 or zeros == 3):
             self.point_within_triangle = True
@@ -71,7 +73,8 @@ t.compute_cross_product()
 if(t.point_within_triangle):
     print('Point lies within the triangle')
 elif(t.point_intersects_triangle):
-    print('Point lies on one of the edges of the triangle')
+    temp = t.intersecting_edge
+    print('Point lies on edge connecting Point {} ({}, {}) and Point {} ({}, {}) of the triangle'.format(temp + 1, t.triangle[temp].x, t.triangle[temp].y, temp + 2, t.triangle[(temp + 1)%3].x, t.triangle[(temp + 1)%3].y))
 else:
     print('Point lies outside the triangle')
 
