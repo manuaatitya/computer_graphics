@@ -18,7 +18,7 @@ class point_within_triangle:
         x,y = map(float,input('Enter the x and y cordinates of the Point P to be tested  ').split())
         self.point = Point(x,y)
     
-    # Get the trinagle coordinates as input data from the user
+    # Get the triangle coordinates as input data from the user
     def get_input_triangle(self):
         for i in range(3):
             x,y = map(float,input('Enter the x and y cordinates of the Point {} of the triangle  '.format(i+1)).split())
