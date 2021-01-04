@@ -48,14 +48,8 @@ class point_and_triangle:
         x = float('inf')
         y = float('inf')
         if (a1*b2 - b1*a2) != 0:
-            if (b1*c2 - b2*c1) == 0:
-                
-                x = 0
-            elif (a2*c1 - c2*a1) == 0:
-                y = 0
-            else:
-                x = (b1*c2 - b2*c1)/(a1*b2 - a2*b1)
-                y = (a2*c1 - c2*a1)/(a1*b2 - a2*b1)
+            x = (b1*c2 - b2*c1)/(a1*b2 - a2*b1)
+            y = (a2*c1 - c2*a1)/(a1*b2 - a2*b1)
         return x,y
     
     # Barycentric method to determine if point is within the triangle
@@ -73,30 +67,28 @@ class point_and_triangle:
         c1 = -1 * v2.x
         c2 = -1 * v2.y
 
-        print('Value of a1 is {}, a2 is {}, b1 is {}, b2 is {}, c1 is {}, c2 is {}'.format(a1,a2,b1,b2,c1,c2))
         self.u, self.v = self.solve2equation2variable(a1,a2,b1,b2,c1,c2)
-        print('u is {} and v is {}'.format(self.u,self.v))
 
         if (self.u < 0 or self.v < 0 or self.u > 1 or self.v > 1 or (self.u + self.v) > 1):
             self.point_outside_triangle = 1
-        elif (self.u < 1 and self.v ==0):
+        elif ((self.u >0 and self.u < 1) and self.v == 0):
             self.point_on_triangle = 1
             self.intersecting_edge = [1,0]
-        elif (self.v < 1 and self.u == 0):
+        elif ((self.v > 0 and self.v < 1) and self.u == 0):
             self.point_on_triangle = 1
             self.intersecting_edge = [2,0]
         elif (self.u < 1 and self.v < 1) and (self.u + self.v == 1):
             self.point_on_triangle = 1
             self.intersecting_edge = [2,1]
-        elif (self.u == 0 and self.v == 0):
+        elif (self.v == 0 and self.u == 0):
             self.point_on_triangle = 1
             self.intersecting_vertex = 0
-        elif (self.v == 0 and self.u == 1):
-            self.point_on_triangle = 1
-            self.intersecting_vertex = 2
         elif (self.u == 1 and self.v == 0):
             self.point_on_triangle = 1
             self.intersecting_vertex = 1
+        elif (self.u == 0 and self.v == 1):
+            self.point_on_triangle = 1
+            self.intersecting_vertex = 2
         else:
             self.point_inside_triangle = 1
     
@@ -106,9 +98,9 @@ class point_and_triangle:
 
         # Printing the given triangle points
         for i in range(3):
-            print('The entered cordinates of the point {} in the triangle is {} {}'.format(i+1, self.triangle[i].x, self.triangle[i].y))
+            print('\nThe entered cordinates of the point {} in the triangle is {} {} \n'.format(i+1, self.triangle[i].x, self.triangle[i].y))
 
-        print('Barycentric weights u = {} and v = {}'.format(self.u, self.v))
+        print('\n Barycentric weights u = {} and v = {} \n'.format(self.u, self.v))
 
 t = point_and_triangle()
 t.get_input_point()
@@ -116,14 +108,14 @@ t.get_input_triangle()
 t.point_within_triangle_barycentric()
 
 if (t.point_outside_triangle):
-    print('The given point lies outside the triangle')
+    print('\nThe given point lies outside the triangle \n')
 elif (t.point_inside_triangle):
-    print('The given point lies inside the triangle')
+    print('\nThe given point lies inside the triangle \n')
 elif (t.point_on_triangle):
     a = t.intersecting_vertex
-    if(a >= 0):
-       print('The given point lies on the vertex {} of the triangle i.e on the point ({} {})'.format(a+1, t.triangle[a].x, t.triangle[a].y))
+    if(a > -1):
+       print('\nThe given point lies on the vertex {} of the triangle i.e on the point ({} {}) \n'.format(a+1, t.triangle[a].x, t.triangle[a].y))
     
     b = t.intersecting_edge
     if(b[0]+b[1] != -10):
-        print('The given point intersects the edge containing Point ({} {}) and Point ({} {}) of the triangle '.format(t.triangle[b[0]].x, t.triangle[b[0]].y, t.triangle[b[1]].x, t.triangle[b[1]].y))
+        print('\nThe given point intersects the edge containing Point ({} {}) and Point ({} {}) of the triangle \n'.format(t.triangle[b[0]].x, t.triangle[b[0]].y, t.triangle[b[1]].x, t.triangle[b[1]].y))
